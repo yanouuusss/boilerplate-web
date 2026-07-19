@@ -23,5 +23,9 @@ export default tseslint.config(
     files: ['**/*.js', '**/*.mjs'],
     languageOptions: { globals: globals.node },
   },
+  {
+    files: ['src/public/**/*.js'],
+    languageOptions: { globals: globals.browser },
+  },
   prettier,
 );

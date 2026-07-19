@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="/public/css/app.css" />
     <script src="/public/vendor/htmx.min.js" defer></script>
     <script src="/public/vendor/alpine.min.js" defer></script>
+    <script src="/public/js/app.js" defer></script>
   </head>
   <body>
-    <main class="container"><%~ it.body %></main>
+    <main class="container">
+      <nav><a href="/">Accueil</a> · <a href="/notes">Notes</a></nav>
+      <%~ it.body %>
+    </main>
   </body>
 </html>

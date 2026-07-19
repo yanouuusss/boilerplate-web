@@ -1,12 +1,22 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { loadEnv } from '../config/env.js';
+import { createDb } from '../db/client.js';
 import { buildApp } from './app.js';
 
 let app: FastifyInstance;
 
 beforeAll(async () => {
-  app = await buildApp(loadEnv({ NODE_ENV: 'test', LOG_LEVEL: 'error' }));
+  // Le pool pg est paresseux : aucune connexion tant qu'aucune route ne requête la base.
+  const database = createDb('postgresql://postgres:unused@127.0.0.1:9/unused');
+  app = await buildApp(
+    loadEnv({
+      NODE_ENV: 'test',
+      LOG_LEVEL: 'error',
+      DATABASE_URL: 'postgresql://postgres:unused@127.0.0.1:9/unused',
+    }),
+    database.db,
+  );
 });
 
 afterAll(async () => {
