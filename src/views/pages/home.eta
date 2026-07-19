@@ -1,0 +1,7 @@
+<% layout('../layouts/main') %>
+<h1><%= it.title %></h1>
+<p>Serveur Fastify + HTMX + Alpine opérationnel.</p>
+<div x-data="{ open: false }">
+  <button x-on:click="open = !open">Démo Alpine</button>
+  <p x-show="open" x-cloak>État local éphémère géré par Alpine — rien de métier ici.</p>
+</div>
