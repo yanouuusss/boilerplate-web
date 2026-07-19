@@ -1,0 +1,2 @@
+# Commit physiquement impossible si l'une de ces vérifications est rouge.
+npm run lint && npm run typecheck && npm run test:unit && gitleaks git --pre-commit --staged
