@@ -1,15 +1,18 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Fastify, { type FastifyInstance } from 'fastify';
+import fastifyFormbody from '@fastify/formbody';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import { Eta } from 'eta';
 import type { Env } from '../config/env.js';
+import type { Database } from '../db/client.js';
+import { registerNotesRoutes } from './routes/notes.js';
 
 const serverDir = path.dirname(fileURLToPath(import.meta.url));
 
-export async function buildApp(env: Env): Promise<FastifyInstance> {
+export async function buildApp(env: Env, db: Database['db']): Promise<FastifyInstance> {
   const app = Fastify({
     logger: {
       level: env.LOG_LEVEL,
@@ -40,9 +43,13 @@ export async function buildApp(env: Env): Promise<FastifyInstance> {
     prefix: '/public/',
   });
 
+  await app.register(fastifyFormbody);
+
   app.get('/health', () => ({ status: 'ok' }));
 
   app.get('/', (_request, reply) => reply.view('pages/home', { title: 'Boilerplate web' }));
+
+  registerNotesRoutes(app, db);
 
   return app;
 }

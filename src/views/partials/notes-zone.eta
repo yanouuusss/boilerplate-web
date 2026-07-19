@@ -1,0 +1,24 @@
+<div id="notes-zone">
+  <% if (it.error) { %>
+    <p class="error" role="alert"><%= it.error %></p>
+  <% } %>
+  <form hx-post="/notes" hx-target="#notes-zone" hx-swap="outerHTML">
+    <input type="text" name="content" placeholder="Nouvelle note" maxlength="500" required />
+    <button type="submit">Ajouter</button>
+  </form>
+  <ul class="notes">
+    <% it.notes.forEach(function (note) { %>
+      <li>
+        <span><%= note.content %></span>
+        <button
+          hx-delete="/notes/<%= note.id %>"
+          hx-target="#notes-zone"
+          hx-swap="outerHTML"
+          aria-label="Supprimer la note"
+        >
+          Supprimer
+        </button>
+      </li>
+    <% }) %>
+  </ul>
+</div>
