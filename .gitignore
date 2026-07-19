@@ -1,0 +1,17 @@
+# Dépendances et build
+node_modules/
+dist/
+
+# Secrets — jamais versionnés
+.env
+.env.*
+!.env.example
+
+# Sorties de tests
+coverage/
+playwright-report/
+test-results/
+
+# Divers
+*.log
+.DS_Store
