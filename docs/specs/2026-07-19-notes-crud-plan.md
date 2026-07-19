@@ -2,7 +2,7 @@
 
 Spec : [2026-07-19-notes-crud.md](2026-07-19-notes-crud.md). Chaque étape : test d'abord (rouge), code minimal (vert), lint + typecheck, case cochée. Une étape à la fois.
 
-- [ ] **1. Schéma + migration**
+- [x] **1. Schéma + migration**
   - Test : intégration (testcontainers) — les migrations s'appliquent, une note s'insère et se relit via le schéma Drizzle.
   - Code : table `notes` dans `src/db/schema.ts` (id uuid généré, content text, created_at timestamptz) ; migration générée par `npm run db:generate`.
   - Vérification : test d'intégration vert, fichier de migration versionné.
