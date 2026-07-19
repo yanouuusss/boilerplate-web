@@ -10,6 +10,9 @@
     <script src="/public/js/app.js" defer></script>
   </head>
   <body>
-    <main class="container"><%~ it.body %></main>
+    <main class="container">
+      <nav><a href="/">Accueil</a> · <a href="/notes">Notes</a></nav>
+      <%~ it.body %>
+    </main>
   </body>
 </html>

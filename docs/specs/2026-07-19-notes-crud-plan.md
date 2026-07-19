@@ -22,7 +22,7 @@ Spec : [2026-07-19-notes-crud.md](2026-07-19-notes-crud.md). Chaque étape : tes
   - Code : `src/server/routes/notes.ts`, vues `pages/notes.eta` + partial `partials/notes-list.eta` (un endpoint = un fragment) ; injection du client db dans `buildApp` ; `DATABASE_URL` ajouté à l'env validé.
   - Vérification : suite complète verte, couverture ≥ 80 %.
 
-- [ ] **5. E2E Playwright + CI**
+- [x] **5. E2E Playwright + CI**
   - Test : E2E — ouvrir /notes, ajouter une note, la voir apparaître sans rechargement, la supprimer, la voir disparaître.
   - Code : service Postgres dans le job `e2e` de `ci.yml` (migrations avant démarrage du serveur) ; lien « Notes » dans le layout.
   - Vérification : E2E vert en local (Docker requis) et en CI.

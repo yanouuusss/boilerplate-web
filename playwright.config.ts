@@ -6,7 +6,7 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:3000',
   },
   webServer: {
-    command: 'npx tsx src/server/index.ts',
+    command: 'npx tsx --env-file-if-exists=.env src/server/index.ts',
     url: 'http://127.0.0.1:3000/health',
     reuseExistingServer: !process.env.CI,
   },
