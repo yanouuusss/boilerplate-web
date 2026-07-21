@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-web",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Boilerplate web : TypeScript strict, Fastify, HTMX + Alpine.js, Supabase auto-hébergé, Drizzle, Zod",
   "private": true,
   "type": "module",
