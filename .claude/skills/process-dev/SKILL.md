@@ -16,11 +16,14 @@ Ce skill est la source de vérité du process de ce repo. Aucune étape n'est op
 1. **Brainstorm** — via le workflow superpowers : poser des questions jusqu'à lever toute ambiguïté du cahier des charges. Ne pas supposer.
 2. **Spec** — écrire dans `docs/specs/<nom>.md` : objectif, critères d'acceptation testables, hors-périmètre, impacts sécurité. **STOP : validation humaine avant de continuer.**
 3. **Plan** — fichier markdown à cases à cocher. Étapes de ≤ 1h. Chaque étape définit : le test à écrire, le code à produire, le critère de vérification. **STOP : validation humaine avant de continuer.**
-4. **Implémentation TDD** — pour chaque étape, dans l'ordre, une seule à la fois :
-   a. Écrire le test → vérifier qu'il échoue (rouge)
-   b. Écrire le code minimal qui le fait passer (vert)
+4. **Implémentation TDD — déléguée à un sous-agent par étape.** Pour chaque étape du plan, dans l'ordre, une seule à la fois, la session principale **délègue à un sous-agent** (outil Task/Agent) plutôt que d'implémenter elle-même. Le sous-agent :
+   a. Écrit le test → vérifie qu'il échoue (rouge)
+   b. Écrit le code minimal qui le fait passer (vert)
    c. Lint + typecheck propres
-   d. Cocher la case du plan
+   d. Ne remonte qu'un **résumé court** : fichiers touchés, résultat des tests, ligne de couverture, points d'attention. Ni le diff complet, ni les sorties brutes.
+
+   La session principale coche alors la case du plan et lance l'étape suivante. Elle garde en contexte la spec, le plan et les résumés — pas les détails d'implémentation. Voir « Discipline de contexte » ci-dessous. Une étape triviale (renommage, correction de typo) peut être faite directement, sans sous-agent.
+
 5. **Vérification finale** — suite complète : `npm test`, `npm run lint`, `npm run typecheck`, scan secrets. Tout doit être vert.
 6. **Review** — lancer `/code-review`. Si le diff touche auth, session, entrées utilisateur, upload ou SQL brut : appliquer en plus la checklist sécurité de la PR.
 7. **PR** — branche `feat/…` ou `fix/…`, commits conventionnels, PR avec la checklist Definition of Done remplie.
@@ -41,6 +44,15 @@ Ce skill est la source de vérité du process de ce repo. Aucune étape n'est op
 - Le navigateur ne parle jamais à Supabase ; Drizzle possède le schéma (toute modif de schéma = migration générée par drizzle-kit, jamais de SQL manuel sur la base).
 - Un diff = une intention. Pas de refactoring opportuniste mélangé à une feature.
 - Chaque affirmation de progrès s'appuie sur une preuve exécutée (sortie de test, commande) — sinon dire explicitement "non vérifié".
+
+## Discipline de contexte (obligatoire)
+
+Le coût en tokens d'une session ≈ taille du contexte × nombre de requêtes. Le contexte ne se purge pas tout seul : il faut le tenir court activement.
+
+- **Implémentation par sous-agents** (voir étape 4) : les gros consommateurs — diffs, sorties de tests, exploration de fichiers — sont brûlés dans le contexte isolé d'un sous-agent, jeté à la fin. La session principale n'orchestre que spec, plan et résumés.
+- **Une session par bloc, pas par lot.** Après chaque étape mergée (ou tous les 2–3 pas), repartir d'une session neuve (`/clear`). Le point de reprise est le plan à cases cochées dans `docs/specs/` — aucune connaissance n'est perdue. Ne jamais dérouler un lot entier dans une seule session.
+- **Sorties d'outils.** Ne jamais recracher une sortie de commande longue dans la réponse ; s'appuyer sur les résumés. Le hook `shrink-output` compresse déjà les grosses sorties, mais éviter de les générer reste préférable.
+- **Lectures ciblées.** Lire la portion utile d'un fichier, pas le fichier entier ; ne pas relire un fichier déjà en contexte.
 
 ## Definition of Done
 

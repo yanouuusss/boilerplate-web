@@ -33,3 +33,9 @@ Application web : TypeScript strict, Fastify, HTMX + Alpine.js (rendu serveur), 
 - Validation Zod à toute frontière (routes, env, formulaires).
 - Jamais de commit sur `main` ; commits conventionnels (`feat:`, `fix:`, …) ; petites branches courtes.
 - Secrets uniquement en variables d'environnement — jamais dans le code, les logs ou les templates.
+
+## Discipline de contexte
+
+Tenir le contexte court est une contrainte de premier ordre (coût en tokens ≈ taille du contexte × nombre de requêtes). Voir la section dédiée du skill `process-dev`. En résumé : l'implémentation passe par des sous-agents, une session couvre un bloc et non un lot entier, et on repart d'une session neuve (`/clear`) entre les blocs — le plan à cases cochées dans `docs/specs/` est le point de reprise.
+
+**Instructions de compaction** — si le contexte doit être résumé automatiquement, préserver en priorité : le cahier des charges et la spec en cours, l'état du plan (cases cochées / étape courante), les décisions d'architecture prises et leurs raisons, les commandes de vérification du projet. Peuvent être résumés agressivement : les sorties de tests, les diffs déjà appliqués, l'exploration de fichiers.
