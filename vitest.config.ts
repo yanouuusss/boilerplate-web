@@ -3,6 +3,9 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     include: ['src/**/*.test.ts'],
+    // Reporter compact : une ligne de synthèse au lieu du détail par test (économie de contexte).
+    // Les échecs restent affichés intégralement.
+    reporters: [['dot', { summary: true }]],
     coverage: {
       provider: 'v8',
       include: ['src/**'],

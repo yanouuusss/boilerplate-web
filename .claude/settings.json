@@ -10,6 +10,10 @@
       {
         "matcher": "Edit|Write",
         "hooks": [{ "type": "command", "command": "node .claude/hooks/format-file.mjs" }]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [{ "type": "command", "command": "node .claude/hooks/shrink-output.mjs" }]
       }
     ],
     "Stop": [
