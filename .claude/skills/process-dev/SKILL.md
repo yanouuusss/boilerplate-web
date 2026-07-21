@@ -23,6 +23,7 @@ Ce skill est la source de vérité du process de ce repo. Aucune étape n'est op
    d. Ne remonte qu'un **résumé court** : fichiers touchés, résultat des tests, ligne de couverture, points d'attention. Ni le diff complet, ni les sorties brutes.
 
    La session principale coche alors la case du plan et lance l'étape suivante. Elle garde en contexte la spec, le plan et les résumés — pas les détails d'implémentation. Voir « Discipline de contexte » ci-dessous. Une étape triviale (renommage, correction de typo) peut être faite directement, sans sous-agent.
+
 5. **Vérification finale** — suite complète : `npm test`, `npm run lint`, `npm run typecheck`, scan secrets. Tout doit être vert.
 6. **Review** — lancer `/code-review`. Si le diff touche auth, session, entrées utilisateur, upload ou SQL brut : appliquer en plus la checklist sécurité de la PR.
 7. **PR** — branche `feat/…` ou `fix/…`, commits conventionnels, PR avec la checklist Definition of Done remplie.

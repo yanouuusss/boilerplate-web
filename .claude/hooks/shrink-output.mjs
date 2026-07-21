@@ -11,7 +11,8 @@ const THRESHOLD_CHARS = 2500;
 const HEAD_LINES = 15;
 const TAIL_LINES = 45;
 const MAX_ERROR_LINES = 25;
-const ERROR_RE = /(error|fail|✗|×|✘|✖|exception|cannot|refused|denied|not found|introuvable|échou)/i;
+const ERROR_RE =
+  /(error|fail|✗|×|✘|✖|exception|cannot|refused|denied|not found|introuvable|échou)/i;
 
 function passthrough() {
   process.exit(0); // aucune sortie → Claude Code conserve le résultat original
